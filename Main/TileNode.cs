@@ -4,16 +4,23 @@ namespace Script.Main
 {
     public class TileNode : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
+        public TileType TileType { get; set; }
+        public Vector2 TileCoordinate { get; set; }
 
-        // Update is called once per frame
-        void Update()
+        public TileNode(TileType tileType, Vector2 tileCoordinate)
         {
+            TileType = tileType;
+            TileCoordinate = tileCoordinate;
+        } 
         
+        void OnMouseDown()
+        {
+            Debug.Log($"Tile clicked at ({TileCoordinate.x}, {TileCoordinate.y})");
         }
+    }
+
+    public enum TileType
+    {
+        Default,
     }
 }
