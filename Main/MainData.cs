@@ -9,8 +9,6 @@ namespace Script.Main
     public class MainData : MonoBehaviour
     {
         public List<TileNode> currentTileList = new List<TileNode>();
-
-        TileManager _tileManager;
         
         void Awake()
         {
