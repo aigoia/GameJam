@@ -32,7 +32,7 @@ namespace Script.Main
                     GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity, transform);
                     tile.GetComponent<TileNode>().TileType = TileType.Default;
                     tile.GetComponent<TileNode>().TileCoordinate = new Vector2(x, y);
-                    tile.name = $"Tile({x}, {y})";
+                    tile.name = $"Tile ({x}, {y})";
                 }
             }
         }
