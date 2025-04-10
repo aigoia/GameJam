@@ -19,7 +19,7 @@ namespace Script.Main
             _mainData = FindObjectOfType<GameManager>().GetComponent<MainData>();
         }
 
-        [ContextMenu("Spawn Tiles")]
+        [ContextMenu("Spawn Tile")]
         void SpawnTile()
         {
             ClearTile();
@@ -30,14 +30,16 @@ namespace Script.Main
                 {
                     Vector3 position = new Vector3(x * spacing + initPosition.x, 0, y * spacing + initPosition.y);
                     GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity, transform);
-                    tile.GetComponent<TileNode>().TileType = TileType.Default;
-                    tile.GetComponent<TileNode>().TileCoordinate = new Vector2(x, y);
+                    TileNode tileNode = tile.GetComponent<TileNode>();
+                    tileNode.tileType = TileType.Default;
+                    tileNode.tileCoordinate = new Vector2(x, y);
+                    tileNode.tileStyle = TileStyle.OneArea;
                     tile.name = $"Tile ({x}, {y})";
                 }
             }
         }
 
-        [ContextMenu("Clear Tiles")]
+        [ContextMenu("Clear Tile")]
         void ClearTile()
         {
             for (int i = transform.childCount - 1; i >= 0; i--)
