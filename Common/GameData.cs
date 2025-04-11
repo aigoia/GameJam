@@ -4,5 +4,8 @@ namespace Script.Common
     {
         // this part has no '='
         public static string GameName => "Class Knight";
+        
+        public static float TileSize => 1.5f;
+
     }
 }

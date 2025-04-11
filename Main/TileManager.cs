@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Script.Common;
 using UnityEngine;
 
 namespace Script.Main
@@ -16,7 +17,7 @@ namespace Script.Main
         
         void Awake()
         {
-            _mainData = FindObjectOfType<GameManager>().GetComponent<MainData>();
+            _mainData = FindObjectOfType<MainData>();
         }
 
         [ContextMenu("Spawn Tile")]
@@ -28,12 +29,15 @@ namespace Script.Main
             {
                 for (int y = 0; y < height; y++)
                 {
-                    Vector3 position = new Vector3(x * spacing + initPosition.x, 0, y * spacing + initPosition.y);
+                    Vector3 position = new Vector3(x * spacing + initPosition.x, 0, y * spacing + initPosition.y) * GameData.TileSize;
                     GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity, transform);
+                    var originScale = tilePrefab.transform.localScale;
+                    tile.transform.localScale = new Vector3(originScale.x, originScale.y, originScale.z) * GameData.TileSize;
+                    
                     TileNode tileNode = tile.GetComponent<TileNode>();
                     tileNode.tileType = TileType.Default;
                     tileNode.tileCoordinate = new Vector2(x, y);
-                    tileNode.tileStyle = TileStyle.OneArea;
+                    tileNode.moveAwayType = MoveAwayType.OneArea;
                     tile.name = $"Tile ({x}, {y})";
                 }
             }

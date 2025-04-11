@@ -12,7 +12,7 @@ namespace Script.Main
         public Vector2 tileCoordinate;
         public TileNode tileNodeParent;
 
-        public TileStyle tileStyle;
+        public MoveAwayType moveAwayType;
         public float farFormTarget;
         public float fCost;
 
@@ -33,7 +33,7 @@ namespace Script.Main
         Default,
     }
     
-    public enum TileStyle
+    public enum MoveAwayType
     {
         NonSetting, OneArea, TwoArea
     }

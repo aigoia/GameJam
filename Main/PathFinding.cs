@@ -21,6 +21,7 @@ namespace Script.Main
 		public bool debugMod = false;
 
 		Transform _debugPath;
+		
 		int PathFindingCount => 32;
 
 		void Awake()
@@ -29,11 +30,18 @@ namespace Script.Main
 			if (_debugPath == null) _debugPath = transform;
 		}
 
-		void DebugPath(GameObject objectType, Vector2 pos)
+		void DebugPath(GameObject typeByObject, Vector2 pos)
 		{
-			Instantiate(objectType, new Vector3(pos.x, 0, pos.y), Quaternion.identity, _debugPath);
+			var debugObject =  Instantiate(typeByObject, new Vector3(pos.x, 0, pos.y) * GameData.TileSize, Quaternion.identity, _debugPath);
+			var originScale = typeByObject.transform.localScale;
+			debugObject.transform.localScale = new Vector3(originScale.x, originScale.y, originScale.z) * GameData.TileSize;
 		}
-
+		
+		public void PrintWay(List<TileNode> wayNodeList)
+		{
+			wayNodeList.ForEach(i => DebugPath(wayObject, i.tileCoordinate));
+		}
+		
 		readonly Vector2[] _nearArray =
 		{
 			new(1, 0), new(-1, -1), new(0, -1), new(1, -1),
@@ -48,7 +56,7 @@ namespace Script.Main
 			{
 				var nearCoord = currentNode.tileCoordinate + direction;
 
-				neighbours.AddRange(map.Where(tile => tile.tileCoordinate == nearCoord).Where(tile => tile == endNode || pathFindingStyle == PathFindingStyle.Out || tile.tileStyle != TileStyle.NonSetting));
+				neighbours.AddRange(map.Where(tile => tile.tileCoordinate == nearCoord).Where(tile => tile == endNode || pathFindingStyle == PathFindingStyle.Out || tile.moveAwayType != MoveAwayType.NonSetting));
 			}
 			return neighbours;
 		}
@@ -97,7 +105,7 @@ namespace Script.Main
 					var path = Retrace(startNode, endNode);
 
 					// Out mode return only OneArea or TwoArea
-					return pathFindingStyle == PathFindingStyle.Out ? path.Where(n => n.tileStyle == TileStyle.OneArea || n.tileStyle == TileStyle.TwoArea).ToList() : path;
+					return pathFindingStyle == PathFindingStyle.Out ? path.Where(n => n.moveAwayType == MoveAwayType.OneArea || n.moveAwayType == MoveAwayType.TwoArea).ToList() : path;
 				}
 
 				foreach (var neighbor in GetNearList(current, endNode, map, pathFindingStyle))
@@ -137,7 +145,7 @@ namespace Script.Main
 				{
 					var path = Retrace(startNode, endNode);
 
-					return pathFindingStyle == PathFindingStyle.Out ? path.Where(n => n.tileStyle == TileStyle.OneArea || n.tileStyle == TileStyle.TwoArea).ToList() : path;
+					return pathFindingStyle == PathFindingStyle.Out ? path.Where(n => n.moveAwayType == MoveAwayType.OneArea || n.moveAwayType == MoveAwayType.TwoArea).ToList() : path;
 				}
 
 				openList.Remove(current);

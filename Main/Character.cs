@@ -23,9 +23,11 @@ namespace Script.Main
             var endNode = map.Find(i => i.tileCoordinate == new Vector2(5, 5));
             
             
-            var result = _pathFinding.GreedPathFinding(startNode, endNode, map);
-            // var result = _pathFinding.AStarPathFinding(startNode, endNode, map);
+            // var result = _pathFinding.GreedPathFinding(startNode, endNode, map);
+            var result = _pathFinding.AStarPathFinding(startNode, endNode, map);
             Show.PrintList(result);
+            // result.Add(startNode);
+            _pathFinding.PrintWay(result);
         }
     }
 }
