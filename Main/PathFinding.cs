@@ -56,7 +56,9 @@ namespace Script.Main
 			{
 				var nearCoord = currentNode.tileCoordinate + direction;
 
-				neighbours.AddRange(map.Where(tile => tile.tileCoordinate == nearCoord).Where(tile => tile == endNode || pathFindingStyle == PathFindingStyle.Out || tile.moveAwayType != MoveAwayType.NonSetting));
+				neighbours.AddRange(map.
+					Where(tile => tile.tileCoordinate == nearCoord).
+					Where(tile => tile == endNode || pathFindingStyle == PathFindingStyle.Out || tile.moveAwayType != MoveAwayType.NonSetting));
 			}
 			return neighbours;
 		}
