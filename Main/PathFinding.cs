@@ -58,7 +58,9 @@ namespace Script.Main
 
 				neighbours.AddRange(map.
 					Where(tile => tile.tileCoordinate == nearCoord).
-					Where(tile => tile == endNode || pathFindingStyle == PathFindingStyle.Out || tile.moveAwayType != MoveAwayType.NonSetting));
+					Where(tile => tile == endNode || pathFindingStyle == PathFindingStyle.Out || tile.moveAwayType != MoveAwayType.NonSetting
+					)
+				);
 			}
 			return neighbours;
 		}
