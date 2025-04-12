@@ -141,13 +141,13 @@ namespace Script.Main
 
 			while (limit-- > 0 && openList.Count > 0)
 			{
-				var current = openList.OrderBy(n => n.fCost).ThenBy(n => n.hCost).First();
+				var current = openList.OrderBy(tileNode => tileNode.fCost).ThenBy(n => n.hCost).First();
 
 				if (current == endNode)
 				{
 					var path = Retrace(startNode, endNode);
 
-					return pathFindingStyle == PathFindingStyle.Out ? path.Where(n => n.moveAwayType == MoveAwayType.OneArea || n.moveAwayType == MoveAwayType.TwoArea).ToList() : path;
+					return pathFindingStyle == PathFindingStyle.Out ? path.Where(tileNode => tileNode.moveAwayType == MoveAwayType.OneArea || tileNode.moveAwayType == MoveAwayType.TwoArea).ToList() : path;
 				}
 
 				openList.Remove(current);
