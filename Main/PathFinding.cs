@@ -21,6 +21,7 @@ namespace Script.Main
 		public bool debugMod = false;
 
 		Transform _debugPath;
+		readonly HashSet<Vector2> _debuggedPositions = new();
 		
 		int PathFindingCount => 32;
 
@@ -29,9 +30,10 @@ namespace Script.Main
 			if (_debugPath == null) _debugPath = transform.Find("Path");
 			if (_debugPath == null) _debugPath = transform;
 		}
-
-		void DebugPath(GameObject typeByObject, Vector2 pos)
+		
+		void SafeDebug(GameObject typeByObject, Vector2 pos)
 		{
+			if (!_debuggedPositions.Add(pos)) return;
 			var debugObject =  Instantiate(typeByObject, new Vector3(pos.x, 0, pos.y) * GameData.TileSize, Quaternion.identity, _debugPath);
 			var originScale = typeByObject.transform.localScale;
 			debugObject.transform.localScale = new Vector3(originScale.x, originScale.y, originScale.z) * GameData.TileSize;
@@ -39,7 +41,7 @@ namespace Script.Main
 		
 		public void PrintWay(List<TileNode> wayNodeList)
 		{
-			wayNodeList.ForEach(i => DebugPath(wayObject, i.tileCoordinate));
+			wayNodeList.ForEach(i => SafeDebug(wayObject, i.tileCoordinate));
 		}
 		
 		readonly Vector2[] _nearArray =
@@ -65,8 +67,6 @@ namespace Script.Main
 
 		TileNode GetMin(List<TileNode> openList, TileNode endNode)
 		{
-			Show.Print(openList);
-			
 			foreach (var node in openList)
 			{
 				node.farFormTarget = Vector2.Distance(node.tileCoordinate, endNode.tileCoordinate);
@@ -120,13 +120,13 @@ namespace Script.Main
 				}
 
 				if (!debugMod) continue;
-				map.ForEach(i => DebugPath(mapObject, i.tileCoordinate));
-				openList.ForEach(i => DebugPath(openObject, i.tileCoordinate));
-				closedSet.ToList().ForEach(i => DebugPath(closedObject, i.tileCoordinate));
+				map.ForEach(i => SafeDebug(mapObject, i.tileCoordinate));
+				openList.ForEach(i => SafeDebug(openObject, i.tileCoordinate));
+				closedSet.ToList().ForEach(i => SafeDebug(closedObject, i.tileCoordinate));
 			}
 
 			Debug.Log("There is no path.");
-			return null;
+			return new List<TileNode>();
 		}
 		
 		public List<TileNode> AStarPathFinding(TileNode startNode, TileNode endNode, List<TileNode> map, PathFindingStyle pathFindingStyle = PathFindingStyle.In)
@@ -169,12 +169,12 @@ namespace Script.Main
 				}
 
 				if (!debugMod) continue;
-				openList.ForEach(i => DebugPath(openObject, i.tileCoordinate));
-				closedSet.ToList().ForEach(i => DebugPath(closedObject, i.tileCoordinate));
+				openList.ForEach(i => SafeDebug(openObject, i.tileCoordinate));
+				closedSet.ToList().ForEach(i => SafeDebug(closedObject, i.tileCoordinate));
 			}
 
 			Debug.Log("There is no path.");
-			return null;
+			return new List<TileNode>();
 		}
 	}
 }
