@@ -74,7 +74,7 @@ namespace Script.Main
 				node.farFormTarget = Vector2.Distance(node.tileCoordinate, endNode.tileCoordinate);
 			}
 
-			return openList.OrderBy<TileNode, object>(n => n.farFormTarget).First();
+			return openList.OrderBy<TileNode, object>(tileNode => tileNode.farFormTarget).First();
 		}
 
 		List<TileNode> Retrace(TileNode startNode, TileNode endNode)
@@ -122,9 +122,9 @@ namespace Script.Main
 				}
 
 				if (!debugMod) continue;
-				map.ForEach(i => DebugPath(mapObject, i.tileCoordinate));
-				openList.ForEach(i => DebugPath(openObject, i.tileCoordinate));
-				closedSet.ToList().ForEach(i => DebugPath(closedObject, i.tileCoordinate));
+				map.ForEach(tileNode => DebugPath(mapObject, tileNode.tileCoordinate));
+				openList.ForEach(tileNode => DebugPath(openObject, tileNode.tileCoordinate));
+				closedSet.ToList().ForEach(tileNode => DebugPath(closedObject, tileNode.tileCoordinate));
 			}
 
 			Debug.Log("There is no path.");
@@ -171,8 +171,9 @@ namespace Script.Main
 				}
 
 				if (!debugMod) continue;
-				openList.ForEach(i => DebugPath(openObject, i.tileCoordinate));
-				closedSet.ToList().ForEach(i => DebugPath(closedObject, i.tileCoordinate));
+				map.ForEach(tileNode => DebugPath(mapObject, tileNode.tileCoordinate));
+				openList.ForEach(tileNode => DebugPath(openObject, tileNode.tileCoordinate));
+				closedSet.ToList().ForEach(tileNode => DebugPath(closedObject, tileNode.tileCoordinate));
 			}
 
 			Debug.Log("There is no path.");
