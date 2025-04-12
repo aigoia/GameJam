@@ -67,8 +67,6 @@ namespace Script.Main
 
 		TileNode GetMin(List<TileNode> openList, TileNode endNode)
 		{
-			Show.Print(openList);
-			
 			foreach (var node in openList)
 			{
 				node.farFormTarget = Vector2.Distance(node.tileCoordinate, endNode.tileCoordinate);
