@@ -12,7 +12,7 @@ namespace Script.Main
         
         void Awake()
         {
-            currentTileList = FindObjectsByType<TileNode>(FindObjectsSortMode.None).ToList();
+            currentTileList ??= FindObjectsByType<TileNode>(FindObjectsSortMode.None).ToList();
         }
     }
 }

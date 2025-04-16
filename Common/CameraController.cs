@@ -28,5 +28,15 @@ namespace Script.Common
 
             transform.rotation = Quaternion.Euler(_rotationX, _rotationY, 0f);
         }
+
+        public void CloseCamera(Vector3 transformPosition, bool isClosed, bool b)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void FollowCamera(Vector3 transformPosition, bool isFollow)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

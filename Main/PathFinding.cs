@@ -54,10 +54,10 @@ namespace Script.Main
 
 			foreach (var direction in _nearArray)
 			{
-				var nearCoord = currentNode.tileCoordinate + direction;
+				var nearCoordinate = currentNode.tileCoordinate + direction;
 
 				neighbours.AddRange(map.
-					Where(tile => tile.tileCoordinate == nearCoord).
+					Where(tile => tile.tileCoordinate == nearCoordinate).
 					Where(tile => tile == endNode || pathFindingStyle == PathFindingStyle.Out || tile.moveAwayType != MoveAwayType.NonSetting
 					)
 				);
@@ -72,7 +72,7 @@ namespace Script.Main
 				node.farFormTarget = Vector2.Distance(node.tileCoordinate, endNode.tileCoordinate);
 			}
 
-			return openList.OrderBy<TileNode, object>(tileNode => tileNode.farFormTarget).First();
+			return openList.OrderBy(tileNode => tileNode.farFormTarget).First();
 		}
 
 		List<TileNode> Retrace(TileNode startNode, TileNode endNode)

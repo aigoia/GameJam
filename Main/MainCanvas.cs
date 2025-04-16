@@ -2,11 +2,8 @@ using UnityEngine;
 
 namespace Script.Main
 {
-    public class Player : MonoBehaviour
+    public class MainCanvas : MonoBehaviour
     {
         
-
-        
     }
-    
 }

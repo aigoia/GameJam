@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using Script.Common;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Script.Main
 {
-    public class TileManager : MonoBehaviour
+    public class GridManager : MonoBehaviour
     {
         public GameObject tilePrefab;
         public int width = 10;
@@ -13,11 +14,11 @@ namespace Script.Main
         public float spacing = 1f;
         public Vector2 initPosition = new Vector2(0, 0);
 
-        MainData _mainData;
+        public MainData mainData;
         
         void Awake()
         {
-            _mainData = FindObjectOfType<MainData>();
+            mainData ??= FindObjectOfType<MainData>();
         }
 
         [ContextMenu("Spawn Tile")]
@@ -39,6 +40,8 @@ namespace Script.Main
                     tileNode.tileCoordinate = new Vector2(x, y);
                     tileNode.moveAwayType = MoveAwayType.OneArea;
                     tile.name = $"Tile ({x}, {y})";
+                    
+                    mainData.currentTileList.Add(tileNode);
                 }
             }
         }
