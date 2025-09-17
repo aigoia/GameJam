@@ -1,9 +1,12 @@
+using UnityEditor;
 using UnityEngine;
 
 namespace Script.Common
 {
     public class CameraController : MonoBehaviour
     {
+        public bool isBounce = true;
+        
         float MoveSpeed => 10f;
         float SprintMultiplier => 2f;
         float MouseSensitivity => 200f;
@@ -11,9 +14,9 @@ namespace Script.Common
         float PositionSmoothTime => 0.05f;
         float RotationSmoothFactor => 0.2f;
         float ZoomSmoothTime => 0.1f;
-        float IdleSmoothTime => 0.5f;
-        float IdleMoveSmoothTime => 0.3f;
-        float IdleAmount => 2f;
+        float IdleSmoothTime => 0.3f;
+        float IdleMoveSmoothTime => 0.2f;
+        float IdleAmount => 1f;
 
         float _rotationX = 0f;
         float _rotationY = 0f;
@@ -36,7 +39,8 @@ namespace Script.Common
             _targetRotation = transform.rotation;
             _currentRotation = transform.rotation;
             _currentZoomDistance = 0f;
-            Cursor.lockState = CursorLockMode.Locked;
+            // Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
         void Update()
@@ -56,16 +60,19 @@ namespace Script.Common
             _rotationX -= mouseY;
             _rotationY += mouseX;
             _rotationX = Mathf.Clamp(_rotationX, -90f, 90f);
-
-            _targetRotation = Quaternion.Euler(_rotationX, _rotationY, 0f);
-            _currentRotation = Quaternion.Slerp(_currentRotation, _targetRotation, RotationSmoothFactor);
             
-            float targetIdleYOffset = (Mathf.PerlinNoise(0f, Time.time * IdleMoveSmoothTime) - IdleMoveSmoothTime) * IdleAmount;
-            _idleYOffset = Mathf.SmoothDamp(_idleYOffset, targetIdleYOffset, ref _idleVelocity, IdleSmoothTime);
-
             Vector3 desiredPosition = _targetPosition + _currentRotation * Vector3.forward * _currentZoomDistance;
-            desiredPosition.y += _idleYOffset;
 
+            if (isBounce) {
+                _targetRotation = Quaternion.Euler(_rotationX, _rotationY, 0f);
+                _currentRotation = Quaternion.Slerp(_currentRotation, _targetRotation, RotationSmoothFactor);
+            
+                float targetIdleYOffset = (Mathf.PerlinNoise(0f, Time.time * IdleMoveSmoothTime) - IdleMoveSmoothTime) * IdleAmount;
+                _idleYOffset = Mathf.SmoothDamp(_idleYOffset, targetIdleYOffset, ref _idleVelocity, IdleSmoothTime);
+            
+                desiredPosition.y += _idleYOffset;
+            }
+            
             transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref _currentVelocity, PositionSmoothTime);
             transform.rotation = _currentRotation;
         }
