@@ -80,5 +80,10 @@ namespace Script.Common
                 (list[random1], list[random2]) = (list[random2], list[random1]);
             }
         }
+
+        public static float GetHeuristic(Vector2 a, Vector2 b)
+        {
+           return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
+        }
     }
 }
