@@ -11,7 +11,6 @@ namespace Script.Main
         CinemachineVirtualCamera arcadeVirtualCamera;
         Camera birdCamera;
         ArcadeController arcadeController;
-        public Vector3 changeAction = new Vector3();
 
         void Awake()
         {
@@ -49,7 +48,17 @@ namespace Script.Main
 
         void SwitchToArcade()
         {
-            arcadeVirtualCamera.ForceCameraPosition( arcadeController.transform.position + changeAction, arcadeController.transform.rotation );
+            var baseDirection = Vector3.one; 
+            var variedDirection = new Vector3(
+                baseDirection.x * ((Time.frameCount % 4 <= 0) ? -1 : 1),
+                baseDirection.y * ((Time.frameCount % 4 <= 0) ? -1 : 1),
+                baseDirection.z * ((Time.frameCount % 4 <= 0) ? -1 : -4)
+            );
+            
+            arcadeVirtualCamera.ForceCameraPosition(
+                arcadeController.transform.position + variedDirection, 
+                arcadeController.transform.rotation
+            );
             
             birdCamera.depth = 0;
             arcadeCamera.depth = 1;
