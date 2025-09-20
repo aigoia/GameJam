@@ -1,21 +1,21 @@
 using UnityEngine;
 
-namespace Arcade
+namespace Script.Arcade
 {
     public class PlayerCollider : MonoBehaviour
     {
-        GameObject _shieldMesh;
-        int _blockLayer;
+        GameObject shieldMesh;
+        int blockLayer;
 
         void Awake()
         {
-            _blockLayer = LayerMask.NameToLayer("Block");
-            _shieldMesh = transform.Find("Ball").Find("Shield").gameObject;
+            blockLayer = LayerMask.NameToLayer("Block");
+            shieldMesh = transform.Find("Ball").Find("Shield").gameObject;
         }
 
         void OnCollisionEnter(Collision other)
         {
-            _shieldMesh.SetActive(other.gameObject.layer == _blockLayer);
+            shieldMesh.SetActive(other.gameObject.layer == blockLayer);
         }
     }
 }

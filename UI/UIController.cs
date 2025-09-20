@@ -8,19 +8,19 @@ namespace Script.UI
 {
     public class UIController : MonoBehaviour
     {
-        GameObject _operationPanel; 
-        OperationButtonManager _operationButtonManager;
+        GameObject operationPanel; 
+        OperationButtonManager operationButtonManager;
         
         public List<Animator> buttonAnimatorList;
-        int _selectedHash;
-        int _normalHash;
+        int selectedHash;
+        int normalHash;
 
         void Awake()
         {
-            _selectedHash = Animator.StringToHash("Selected");
-            _normalHash = Animator.StringToHash("Normal");
-            _operationPanel = GameObject.Find("OperationPanel");
-            _operationButtonManager = _operationPanel.GetComponent<OperationButtonManager>();
+            selectedHash = Animator.StringToHash("Selected");
+            normalHash = Animator.StringToHash("Normal");
+            operationPanel = GameObject.Find("OperationPanel");
+            operationButtonManager = operationPanel.GetComponent<OperationButtonManager>();
         }
 
         void Start()
@@ -30,7 +30,7 @@ namespace Script.UI
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape)) _operationButtonManager.OnPlay();
+            if (Input.GetKeyDown(KeyCode.Escape)) operationButtonManager.OnPlay();
         }
     }
 }
