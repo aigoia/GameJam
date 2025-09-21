@@ -48,6 +48,7 @@ namespace Script.Main
 
         void SwitchToArcade()
         {
+            // changed camera moving
             var baseDirection = Vector3.one; 
             var variedDirection = new Vector3(
                 baseDirection.x * ((Time.frameCount % 4 <= 0) ? -1 : 1),

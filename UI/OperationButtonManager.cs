@@ -7,91 +7,91 @@ namespace Script.UI
 {
     public class OperationButtonManager : MonoBehaviour
     {
-        GameObject _buttonPanel;
-        Animator _buttonAnimator;
-        GameObject _darker;
+        GameObject buttonPanel;
+        Animator buttonAnimator;
+        GameObject darker;
         public Image darkerImage; 
-        Animator _leftTopAnimator;
-        Animator _rightTopAnimator;
-        Animator _leftBottomAnimator;
-        Animator _rightBottomAnimator;
-        Animator _middlePanelAnimator;
-        Button _continueButton;
-        Button _exitButton;
-        Button _thisButton;
-        Button _bringOperationButton;
-        CameraController _cameraController;
+        Animator leftTopAnimator;
+        Animator rightTopAnimator;
+        Animator leftBottomAnimator;
+        Animator rightBottomAnimator;
+        Animator middlePanelAnimator;
+        Button continueButton;
+        Button exitButton;
+        Button thisButton;
+        Button bringOperationButton;
+        CameraController cameraController;
         
         
         void Awake()
         {
-            _darker = GameObject.Find("Darker");
-            darkerImage ??= _darker.GetComponent<Image>();
+            darker = GameObject.Find("Darker");
+            darkerImage ??= darker.GetComponent<Image>();
             darkerImage.enabled = true;
-            _darker.SetActive(false);
+            darker.SetActive(false);
             
-            _buttonPanel = GameObject.Find("ButtonPanel");
-            _buttonAnimator = _buttonPanel.GetComponent<Animator>();
+            buttonPanel = GameObject.Find("ButtonPanel");
+            buttonAnimator = buttonPanel.GetComponent<Animator>();
             
-            _leftTopAnimator = GameObject.Find("LeftTopPanel").GetComponent<Animator>();
-            _rightTopAnimator = GameObject.Find("RightTopPanel").GetComponent<Animator>();
-            _leftBottomAnimator = GameObject.Find("LeftBottomPanel").GetComponent<Animator>();
-            _rightBottomAnimator = GameObject.Find("RightBottomPanel").GetComponent<Animator>();
-            _middlePanelAnimator = GameObject.Find("MiddlePanel").GetComponent<Animator>();
+            leftTopAnimator = GameObject.Find("LeftTopPanel").GetComponent<Animator>();
+            rightTopAnimator = GameObject.Find("RightTopPanel").GetComponent<Animator>();
+            leftBottomAnimator = GameObject.Find("LeftBottomPanel").GetComponent<Animator>();
+            rightBottomAnimator = GameObject.Find("RightBottomPanel").GetComponent<Animator>();
+            middlePanelAnimator = GameObject.Find("MiddlePanel").GetComponent<Animator>();
 
-            _continueButton = GameObject.Find("Continue").GetComponent<Button>();
-            _thisButton = GetComponent<Button>();
+            continueButton = GameObject.Find("Continue").GetComponent<Button>();
+            thisButton = GetComponent<Button>();
             
-            _exitButton = GameObject.Find("Exit").GetComponent<Button>();
-            _thisButton = GetComponent<Button>();
+            exitButton = GameObject.Find("Exit").GetComponent<Button>();
+            thisButton = GetComponent<Button>();
             
-            _bringOperationButton =  GameObject.Find("BringOperation").GetComponent<Button>();
-            _bringOperationButton.onClick.AddListener(OnPlay);
+            bringOperationButton =  GameObject.Find("BringOperation").GetComponent<Button>();
+            bringOperationButton.onClick.AddListener(OnPlay);
             
-            _cameraController = FindAnyObjectByType<CameraController>();
+            cameraController = FindAnyObjectByType<CameraController>();
         }
 
         void Start()
         {
-            _continueButton.onClick.AddListener(OnPlayContinue);
-            _exitButton.onClick.AddListener(QuitGame);
+            continueButton.onClick.AddListener(OnPlayContinue);
+            exitButton.onClick.AddListener(QuitGame);
         }
 
         public void OnPlayContinue()
         {
-            if (!_darker.activeSelf) return;
+            if (!darker.activeSelf) return;
 
-            _thisButton.onClick.Invoke();
+            thisButton.onClick.Invoke();
             
-            _buttonAnimator.Play("Hide");
+            buttonAnimator.Play("Hide");
             
-            _leftTopAnimator.Play("Show");
-            _rightTopAnimator.Play("Show");
-            _leftBottomAnimator.Play("Show");
-            _rightBottomAnimator.Play("Show");
-            _middlePanelAnimator.Play("Show");
+            leftTopAnimator.Play("Show");
+            rightTopAnimator.Play("Show");
+            leftBottomAnimator.Play("Show");
+            rightBottomAnimator.Play("Show");
+            middlePanelAnimator.Play("Show");
             
-            _cameraController.enabled = !_cameraController.enabled;
-            _darker.SetActive(!_darker.activeSelf);
+            cameraController.enabled = !cameraController.enabled;
+            darker.SetActive(!darker.activeSelf);
             Cursor.visible = false;
         }
         
         public void OnPlay()
         {
             Cursor.visible = false;
-            _thisButton.onClick.Invoke();
+            thisButton.onClick.Invoke();
             
-            _buttonAnimator.Play(_darker.activeSelf ? "Hide" : "Show");
+            buttonAnimator.Play(darker.activeSelf ? "Hide" : "Show");
             
-            _leftTopAnimator.Play(_darker.activeSelf ? "Show" : "Hide");
-            _rightTopAnimator.Play(_darker.activeSelf ? "Show" : "Hide");
-            _leftBottomAnimator.Play(_darker.activeSelf ? "Show" : "Hide");
-            _rightBottomAnimator.Play(_darker.activeSelf ? "Show" : "Hide");
-            _middlePanelAnimator.Play(_darker.activeSelf ? "Show" : "Hide");
+            leftTopAnimator.Play(darker.activeSelf ? "Show" : "Hide");
+            rightTopAnimator.Play(darker.activeSelf ? "Show" : "Hide");
+            leftBottomAnimator.Play(darker.activeSelf ? "Show" : "Hide");
+            rightBottomAnimator.Play(darker.activeSelf ? "Show" : "Hide");
+            middlePanelAnimator.Play(darker.activeSelf ? "Show" : "Hide");
             
-            _cameraController.enabled = !_cameraController.enabled;
-            _darker.SetActive(!_darker.activeSelf);
-            Cursor.visible = _darker.activeSelf;
+            cameraController.enabled = !cameraController.enabled;
+            darker.SetActive(!darker.activeSelf);
+            Cursor.visible = darker.activeSelf;
         }
         
         public void QuitGame()
