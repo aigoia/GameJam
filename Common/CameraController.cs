@@ -9,7 +9,7 @@ namespace Script.Common
         
         float MoveSpeed => 10f;
         float SprintMultiplier => 2f;
-        float MouseSensitivity => 200f;
+        float MouseSensitivity => 60f;
         float ScrollSpeed => 5f;  
         float PositionSmoothTime => 0.05f;
         float RotationSmoothFactor => 0.2f;

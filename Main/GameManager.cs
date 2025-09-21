@@ -2,6 +2,7 @@ using Script.Arcade;
 using UnityEditor;
 using UnityEngine;
 using Cinemachine;
+using Script.Common;
 
 namespace Script.Main
 {
@@ -11,6 +12,7 @@ namespace Script.Main
         CinemachineVirtualCamera arcadeVirtualCamera;
         Camera birdCamera;
         ArcadeController arcadeController;
+        CameraController cameraController;
 
         void Awake()
         {
@@ -18,6 +20,7 @@ namespace Script.Main
             arcadeVirtualCamera = GameObject.Find("ArcadeCamera").GetComponent<CinemachineVirtualCamera>();
             birdCamera = GameObject.Find("BirdCamera").transform.Find("MainCamera").GetComponent<Camera>();
             arcadeController = FindAnyObjectByType<ArcadeController>();
+            cameraController = FindAnyObjectByType<CameraController>();
         }
 
         void Start()
@@ -64,6 +67,7 @@ namespace Script.Main
             birdCamera.depth = 0;
             arcadeCamera.depth = 1;
             arcadeController.enabled = true;
+            arcadeController.enabled = false;
         }
 
         void SwitchToBird()
@@ -71,6 +75,7 @@ namespace Script.Main
             birdCamera.depth = 1;
             arcadeCamera.depth = 0;
             arcadeController.enabled = false;
+            cameraController.enabled = true;
         }
         
         public void Exit()

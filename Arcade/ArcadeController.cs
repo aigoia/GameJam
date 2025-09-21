@@ -72,7 +72,7 @@ namespace Script.Arcade
         {
             
             speedInput = Input.GetAxis("Vertical") < 0 ? Input.GetAxis("Vertical") * 100f : 
-                          Input.GetAxis("Vertical") > 0 ? Input.GetAxis("Vertical") * Setting.ReverseAccelerator * 100f : 0;
+                         Input.GetAxis("Vertical") > 0 ? Input.GetAxis("Vertical") * Setting.ReverseAccelerator * 100f : 0;
             turnInput = Input.GetAxis("Horizontal");
             jumpInput = Input.GetAxis("Jump") * 100f;
 
