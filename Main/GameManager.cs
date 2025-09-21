@@ -67,7 +67,7 @@ namespace Script.Main
             birdCamera.depth = 0;
             arcadeCamera.depth = 1;
             arcadeController.enabled = true;
-            arcadeController.enabled = false;
+            cameraController.enabled = false;
         }
 
         void SwitchToBird()
